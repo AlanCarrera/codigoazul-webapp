@@ -17,13 +17,13 @@ import jpa.entities.Zonas;
  *
  * @author Ithzell
  */
-public class RoleAssignerFacade {
+public class MethodologyApplier {
     
     private Zonas codeBlueLocation;
     private RoleAssigner roleAssigner;
     private DatabaseUpdater databaseUpdater;
     
-    public RoleAssignerFacade(String zone){
+    public MethodologyApplier(String zone){
         int idZone = Integer.parseInt(zone);
         codeBlueLocation = new Zonas();
         codeBlueLocation.setIdZona(idZone);
@@ -33,7 +33,7 @@ public class RoleAssignerFacade {
         
     }
     
-    public RoleAssignerFacade(Zonas zone){
+    public MethodologyApplier(Zonas zone){
         codeBlueLocation = zone;
         roleAssigner = new RoleAssigner(codeBlueLocation);
         databaseUpdater = new DatabaseUpdater(roleAssigner.getObjFactory());
