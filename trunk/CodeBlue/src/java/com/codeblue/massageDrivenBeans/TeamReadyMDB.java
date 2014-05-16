@@ -18,7 +18,7 @@ import javax.jms.TextMessage;
  */
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/zoneQueue")
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/myQueue")
 })
 public class TeamReadyMDB implements MessageListener {
 
