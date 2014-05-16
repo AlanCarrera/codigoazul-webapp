@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/CodeBlue_TeamGenerator_Simulator/CodeBlueAlertSimulator?wsdl" uri="src/conf/xml-resources/web-service-references/CodeBlueAlertSimulator/wsdl/localhost_8080/CodeBlue_TeamGenerator_Simulator/CodeBlueAlertSimulator.wsdl"/>
+    <system systemId="http://localhost:8080/CodeBlue_TeamGenerator_Simulator/CodeBlueAlertSimulator?xsd=1" uri="src/conf/xml-resources/web-service-references/CodeBlueAlertSimulator/wsdl/localhost_8080/CodeBlue_TeamGenerator_Simulator/CodeBlueAlertSimulator.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/BlueCode_TeamGenerator_Simulator/BlueCodeAlertSimulator?wsdl" uri="src/conf/xml-resources/web-service-references/BlueCodeAlertSimulator/wsdl/localhost_8080/BlueCode_TeamGenerator_Simulator/BlueCodeAlertSimulator.wsdl"/>
+    <system systemId="http://localhost:8080/BlueCode_TeamGenerator_Simulator/BlueCodeAlertSimulator?xsd=1" uri="src/conf/xml-resources/web-service-references/BlueCodeAlertSimulator/wsdl/localhost_8080/BlueCode_TeamGenerator_Simulator/BlueCodeAlertSimulator.xsd_1.xsd"/>
+</catalog>
