@@ -12,12 +12,22 @@ import exceptions.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.jws.Oneway;
-import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.xml.ws.WebServiceRef;
-import services.BlueCodeAlertSimulator_Service;
+import javax.jws.WebService;
 
 /**
  *
@@ -25,11 +35,12 @@ import services.BlueCodeAlertSimulator_Service;
  */
 @WebService(serviceName = "CodeBlueAlert")
 public class CodeBlueAlert {
-    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/BlueCode_TeamGenerator_Simulator/BlueCodeAlertSimulator.wsdl")
-    private BlueCodeAlertSimulator_Service service;
 
-//    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/CodeBlue_TeamGenerator_Simulator/CodeBlueAlertSimulator.wsdl")
-//    private CodeBlueAlertSimulator_Service service;
+    @Resource(mappedName = "jms/myQueue")
+    private Queue myQueue;
+    @Resource(mappedName = "jms/myQueueFactory")
+    private ConnectionFactory myQueueFactory;
+    private String message;
 
     /**
      * Web service operation
@@ -52,7 +63,9 @@ public class CodeBlueAlert {
                     if (z.getYesi() <= y && y <= z.getYeid()) {
                         System.out.println("idPaciente: " + idPaciente + "; zone: " + z.getName());
 //                        idao.updateCharacterOnZone(idPaciente, z.getId());
-                        alertSimulator(z.getId());
+//                        alertSimulator(z.getId());
+                        sendJMSMessageToMyQueue(z.getId());
+                        System.out.println("ajuaa!");
                         break;
                     }
 //                    System.out.println("No");
@@ -61,24 +74,41 @@ public class CodeBlueAlert {
 //            System.out.println("finish");
         } catch (PersistenciaException ex) {
             Logger.getLogger(CharacterPointsWS.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JMSException ex) {
+            Logger.getLogger(CodeBlueAlert.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+//    private void sendJMSMessageToMyQueue(String messageData) {
+//        context.createProducer().send(myQueue, messageData);
+//    }
+    private Message createJMSMessageForjmsMyQueue(Session session, Object messageData) throws JMSException {
+        // TODO create and populate message to send
+        TextMessage tm = session.createTextMessage();
+        tm.setText(messageData.toString());
+        return tm;
+    }
+
+    private void sendJMSMessageToMyQueue(Object messageData) throws JMSException {
+        Connection connection = null;
+        Session session = null;
+        try {
+            connection = myQueueFactory.createConnection();
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer messageProducer = session.createProducer(myQueue);
+            messageProducer.send(createJMSMessageForjmsMyQueue(session, messageData));
+        } finally {
+            if (session != null) {
+                try {
+                    session.close();
+                } catch (JMSException e) {
+                    Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot close session", e);
+                }
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
-
-//    private void alertSimulator(int idZone) {
-//        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-//        // If the calling of port operations may lead to race condition some synchronization is required.
-////        services.CodeBlueAlertSimulator_Service service = new services.CodeBlueAlertSimulator_Service();
-//        services.CodeBlueAlertSimulator port = service.getCodeBlueAlertSimulatorPort();
-////        services.CodeBlueAlertSimulator port = service.getCodeBlueAlertSimulatorPort();
-//        port.alertSimulator(idZone);
-//        System.out.println("ahora si!");
-//    }
-
-    private void alertSimulator(int idZone) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        services.BlueCodeAlertSimulator port = service.getBlueCodeAlertSimulatorPort();
-        port.alertSimulator(idZone);
-    }
-
 }
