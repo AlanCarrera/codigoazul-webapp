@@ -11,8 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import jpa.controller.EquipoRespuestaJpaController;
 import jpa.controller.RolesJpaController;
 import jpa.entities.EquipoBase;
+import jpa.entities.EquipoRespuesta;
 import jpa.entities.Roles;
 import jpa.entities.Zonas;
 
@@ -39,6 +41,10 @@ public class RoleAssigner {
 
     public void setCodeBlueLocation(Zonas codeBlueLocation) {
         this.codeBlueLocation = codeBlueLocation;
+    }
+
+    public EntityManagerFactory getObjFactory() {
+        return objFactory;
     }
 
     protected List<Roles> getRoles() {
