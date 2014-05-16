@@ -7,13 +7,9 @@
 <message name="alert">
 <part name="parameters" element="tns:alert"/>
 </message>
-<message name="alertResponse">
-<part name="parameters" element="tns:alertResponse"/>
-</message>
 <portType name="CodeBlueAlert">
 <operation name="alert">
-<input wsam:Action="http://webServices.codeblue.com/CodeBlueAlert/alertRequest" message="tns:alert"/>
-<output wsam:Action="http://webServices.codeblue.com/CodeBlueAlert/alertResponse" message="tns:alertResponse"/>
+<input wsam:Action="http://webServices.codeblue.com/CodeBlueAlert/alert" message="tns:alert"/>
 </operation>
 </portType>
 <binding name="CodeBlueAlertPortBinding" type="tns:CodeBlueAlert">
@@ -23,9 +19,6 @@
 <input>
 <soap:body use="literal"/>
 </input>
-<output>
-<soap:body use="literal"/>
-</output>
 </operation>
 </binding>
 <service name="CodeBlueAlert">

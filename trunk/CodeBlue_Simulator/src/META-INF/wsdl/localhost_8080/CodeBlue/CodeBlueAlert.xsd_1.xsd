@@ -2,17 +2,11 @@
 
 <xs:element name="alert" type="tns:alert"/>
 
-<xs:element name="alertResponse" type="tns:alertResponse"/>
-
 <xs:complexType name="alert">
 <xs:sequence>
 <xs:element name="idPaciente" type="xs:int"/>
 <xs:element name="x" type="xs:double"/>
 <xs:element name="y" type="xs:double"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="alertResponse">
-<xs:sequence/>
 </xs:complexType>
 </xs:schema>
