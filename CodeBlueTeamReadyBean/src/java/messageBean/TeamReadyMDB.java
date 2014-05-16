@@ -7,7 +7,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import jpa.entities.Zonas;
-import methodology.RoleAssignerFacade;
+import methodology.MethodologyApplier;
 
 @MessageDriven(mappedName = "jms/zoneQueue", activationConfig = {
     @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
@@ -23,7 +23,7 @@ public class TeamReadyMDB implements MessageListener {
         try {
             TextMessage tm = (TextMessage) message;
 
-            RoleAssignerFacade roleA = new RoleAssignerFacade(tm.getText());
+            MethodologyApplier roleA = new MethodologyApplier(tm.getText());
             roleA.formResponseTeam();
 
             System.out.println("Consumed message: " + tm.getText());
