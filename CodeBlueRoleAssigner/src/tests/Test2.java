@@ -6,7 +6,7 @@
 package tests;
 
 import jpa.entities.Zonas;
-import methodology.RoleAssignerFacade;
+import methodology.MethodologyApplier;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Test2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        RoleAssignerFacade roleA = new RoleAssignerFacade(new Zonas(1));
+        MethodologyApplier roleA = new MethodologyApplier(new Zonas(1));
 
         roleA.formResponseTeam();
 
