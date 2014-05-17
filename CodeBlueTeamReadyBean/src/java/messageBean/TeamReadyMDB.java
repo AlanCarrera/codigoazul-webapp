@@ -1,12 +1,12 @@
 package messageBean;
 
+import bean.MessageProducerBean;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import jpa.entities.Zonas;
 import methodology.MethodologyApplier;
 
 @MessageDriven(mappedName = "jms/zoneQueue", activationConfig = {
@@ -23,8 +23,14 @@ public class TeamReadyMDB implements MessageListener {
         try {
             TextMessage tm = (TextMessage) message;
 
-            MethodologyApplier roleA = new MethodologyApplier(tm.getText());
-            roleA.formResponseTeam();
+            MethodologyApplier methodology = new MethodologyApplier(tm.getText());
+            methodology.formResponseTeam();
+            
+            MessageProducerBean messageProducerBean = new MessageProducerBean();
+            
+            //send notice
+            messageProducerBean.setMessage(tm.getText());            
+            messageProducerBean.send();
 
             System.out.println("Consumed message: " + tm.getText());
         } catch (JMSException jex) {
