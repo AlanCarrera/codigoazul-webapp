@@ -34,14 +34,16 @@ public class MessageBean implements MessageListener {
     public void onMessage(Message message) {
         try {
             TextMessage tm = (TextMessage) message;
+            
+            System.out.println("Código azul en área " + tm.getText() + "! Formando equipo de respuesta...");
 
             MethodologyApplier methodology = new MethodologyApplier(tm.getText());
             methodology.formResponseTeam();
             
+            System.out.println("Equipo creado. Enviando notificaciones...");
+            
             //send notice
             sendJMSMessageToTeamReadyQueue(tm.getText());
-
-            System.out.println("Consumed message: " + tm.getText());
         } catch (JMSException jex) {
             System.out.println("Exception: " + jex);
         }
