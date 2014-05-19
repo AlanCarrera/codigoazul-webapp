@@ -8,6 +8,8 @@ package methodology;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jpa.entities.EquipoBase;
 import jpa.entities.EquipoRespuesta;
 import jpa.entities.Roles;
@@ -52,20 +54,22 @@ public class MethodologyApplier {
         return baseTeam;
     }
     
-    public List<EquipoRespuesta> convertToEquipoRespuesta(List<EquipoBase> baseTeam){
+    public List<EquipoRespuesta> convertToResponseTeam(List<EquipoBase> baseTeam){
         int id = 0;
         List<EquipoRespuesta> responseTeam = new ArrayList<>();
         
         for (EquipoBase staff : baseTeam) {
-            responseTeam.add(databaseUpdater.convertToEquipoRespuesta(staff, id));
+            responseTeam.add(databaseUpdater.convertToResponseTeam(staff, id));
             id++;
         }
         
         return responseTeam;
     }
     
-    public void updateDatabase(List<EquipoBase> baseTeam){
-        List<EquipoRespuesta> responseTeam = convertToEquipoRespuesta(baseTeam);
+    public void updateDatabase(List<EquipoBase> baseTeam){        
+        databaseUpdater.deleteResponseTeam();
+        
+        List<EquipoRespuesta> responseTeam = convertToResponseTeam(baseTeam);
         
         for (EquipoRespuesta staff : responseTeam) {
             databaseUpdater.updateDatabase(staff);

@@ -5,10 +5,14 @@
  */
 package methodology;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import jpa.controller.EquipoRespuestaJpaController;
+import jpa.controller.exceptions.NonexistentEntityException;
 import jpa.entities.EquipoBase;
 import jpa.entities.EquipoRespuesta;
 
@@ -17,14 +21,16 @@ import jpa.entities.EquipoRespuesta;
  * @author Adrian
  */
 public class DatabaseUpdater {
-    
+
     private EntityManagerFactory objFactory;
-    
-    public DatabaseUpdater(EntityManagerFactory objFactory){
+    private EquipoRespuestaJpaController responseTeamController;
+
+    public DatabaseUpdater(EntityManagerFactory objFactory) {
         this.objFactory = objFactory;
+        responseTeamController = new EquipoRespuestaJpaController(objFactory);
     }
 
-    protected EquipoRespuesta convertToEquipoRespuesta(EquipoBase selectedStaff, int id) {
+    protected EquipoRespuesta convertToResponseTeam(EquipoBase selectedStaff, int id) {
         EquipoRespuesta equipoRespuesta = new EquipoRespuesta();
         equipoRespuesta.setIdEquipoRespuesta(id);
         equipoRespuesta.setIdPersonal(selectedStaff.getIdPersonal());
@@ -34,12 +40,23 @@ public class DatabaseUpdater {
         return equipoRespuesta;
     }
 
-    protected void updateDatabase(EquipoRespuesta selectedStaff) {        
-        EquipoRespuestaJpaController equipoRespuestaController = new EquipoRespuestaJpaController(objFactory);
+    protected void updateDatabase(EquipoRespuesta selectedStaff) {
         try {
-            equipoRespuestaController.create(selectedStaff);
+            responseTeamController.create(selectedStaff);
         } catch (Exception ex) {
             Logger.getLogger(DatabaseUpdater.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    protected void deleteResponseTeam() {
+        List<EquipoRespuesta> responseTeamList = responseTeamController.findEquipoRespuestaEntities();
+        
+        for (EquipoRespuesta staff : responseTeamList) {
+            try {
+                responseTeamController.destroy(staff.getIdEquipoRespuesta());
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(DatabaseUpdater.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
