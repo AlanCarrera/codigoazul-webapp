@@ -47,13 +47,17 @@ public class RoleAssigner {
         return objFactory;
     }
 
+    public EntityManager getManager() {
+        return manager;
+    }
+
     protected List<Roles> getRoles() {
         RolesJpaController rolesController = new RolesJpaController(objFactory);
         List<Roles> roles = rolesController.findRolesEntities();
         return roles;
     }
 
-    private List<EquipoBase> getEquipoBase(Roles rol) {
+    private List<EquipoBase> getBaseTeam(Roles rol) {
         Query query = manager.createNamedQuery("EquipoBase.findByRol").setParameter("rolesIdrol", rol);
         List<EquipoBase> equipoBase = query.getResultList();
         return equipoBase;
@@ -61,7 +65,7 @@ public class RoleAssigner {
 
     protected EquipoBase qualitativeMethod(Roles rol) {
         //search for qualifying staff
-        List<EquipoBase> equipoBase = getEquipoBase(rol);
+        List<EquipoBase> baseTeam = getBaseTeam(rol);
 
         //sums for each staff
         List<Double> sumsList = new ArrayList<>();
@@ -73,7 +77,7 @@ public class RoleAssigner {
         //temporary factor
         double factor = 0;
 
-        for (EquipoBase personal : equipoBase) {
+        for (EquipoBase personal : baseTeam) {
             query = manager.createNamedQuery("Grafos.findByFactor").setParameter("idzonaOrig", personal.getIdZona()).setParameter("idzonaDest", codeBlueLocation);
             factor = (double) query.getSingleResult();
             
@@ -94,7 +98,7 @@ public class RoleAssigner {
             sumsList.add(sum);
         }
 
-        EquipoBase selectedStaff = selectStaff(equipoBase, sumsList);
+        EquipoBase selectedStaff = selectStaff(baseTeam, sumsList);
         System.out.println("Rol: " + rol.getNombre() + "\nPersonal seleccionado: " + selectedStaff.getIdPersonal().getNombre());
 
         return selectedStaff;

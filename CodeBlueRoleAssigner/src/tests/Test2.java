@@ -6,6 +6,7 @@
 package tests;
 
 import jpa.entities.Zonas;
+import methodology.DatabaseUpdater;
 import methodology.MethodologyApplier;
 
 /**
@@ -21,6 +22,7 @@ public class Test2 {
         MethodologyApplier roleA = new MethodologyApplier(new Zonas(1));
 
         roleA.formResponseTeam();
+
 
     }
 
