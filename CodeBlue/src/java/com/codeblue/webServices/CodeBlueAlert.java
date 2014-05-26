@@ -7,7 +7,10 @@ package com.codeblue.webServices;
 
 import Control.Control;
 import Interfaces.IDAOs;
+import com.bluecode.businessObjects.Employe;
 import com.bluecode.businessObjects.Zone;
+import com.codeblue.webSockets.LoadCodeBlueZone;
+import com.codeblue.webSockets.LoadTeamResponse;
 import exceptions.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,7 +39,7 @@ import javax.jws.WebService;
 @WebService(serviceName = "CodeBlueAlert")
 public class CodeBlueAlert {
 
-    @Resource(mappedName = "jms/myQueue")
+    @Resource(mappedName = "jms/zoneQueue")
     private Queue myQueue;
     @Resource(mappedName = "jms/myQueueFactory")
     private ConnectionFactory myQueueFactory;
@@ -66,6 +69,8 @@ public class CodeBlueAlert {
 //                        alertSimulator(z.getId());
                         sendJMSMessageToMyQueue(z.getId());
                         System.out.println("ajuaa!");
+                        com.codeblue.webSockets.LoadCodeBlueZone ws = new LoadCodeBlueZone();
+                        ws.broadcastCodeBlueZone(z);
                         break;
                     }
 //                    System.out.println("No");

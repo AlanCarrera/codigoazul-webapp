@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 
-var serviceURL = "ws://localhost:8080/CodeBlue/endPoint/loadHospital";
-var socket;
+var serviceLoadHospital = "ws://localhost:8080/CodeBlue/endPoint/loadHospital";
+var serviceLoadTeamResponse = "ws://localhost:8080/CodeBlue/endpoint/loadTeamResponse";
+var serviceLoadCodeBlueZone = "ws://localhost:8080/CodeBlue/endpoint/loadCodeBlueZone";
+var serviceLoadZones = "ws://localhost:8080/CodeBlue/endpoint/loadZones";
+var serviceCodeBlueAlertSimluator = "ws://localhost:8080/CodeBlue/endpoint/codeBlueAlertSimulator";
+var idCodeBlueAlert = "";
+//var socket;
 var map = 0;
 var polylineList = "";
 
@@ -14,22 +19,22 @@ $(document).ready(function() {
 
         console.log("WebSocket is supported by your browser...");
 
-        socket = new WebSocket(serviceURL);
-        socket.binaryType = "arraybuffer";
+        var socketLoadHospital = new WebSocket(serviceLoadHospital);
+        socketLoadHospital.binaryType = "arraybuffer";
 
-        socket.onopen = function(evt) {
+        socketLoadHospital.onopen = function(evt) {
             console.log("Connection Established! message received: ");
         };
 
-        socket.onclose = function() {
+        socketLoadHospital.onclose = function() {
             console.log("Connection Closed!");
         };
 
-        socket.onerror = function(error) {
+        socketLoadHospital.onerror = function(error) {
             console.log("Error Occured: " + error.toString());
         };
 
-        socket.onmessage = function(evt) {
+        socketLoadHospital.onmessage = function(evt) {
             if (typeof evt.data === "string") {
                 console.log("String message received: " + evt.data);
                 drawMap(evt.data);
@@ -41,38 +46,175 @@ $(document).ready(function() {
                 console.log("Blob received: " + evt.data);
             }
         };
+
+//        console.log("WebSocket is supported by your browser...");
+
+        var socketLoadTeamResponse = new WebSocket(serviceLoadTeamResponse);
+        socketLoadTeamResponse.binaryType = "arraybuffer";
+
+        socketLoadTeamResponse.onopen = function(evt) {
+            console.log("Connection Established! message received: ");
+        };
+
+        socketLoadTeamResponse.onclose = function() {
+            console.log("Connection Closed!");
+        };
+
+        socketLoadTeamResponse.onerror = function(error) {
+            console.log("Error Occured: " + error.toString());
+        };
+
+        socketLoadTeamResponse.onmessage = function(evt) {
+            if (typeof evt.data === "string") {
+                console.log("String message received: " + evt.data);
+                var oJson = jQuery.parseJSON(evt.data);
+                for (var i = 0; i < oJson.length; i++) {
+                    var circle = document.getElementById(oJson[i].id);
+                    circle.setAttribute("fill", "blue");
+                }
+            }
+            else if (evt.data instanceof ArrayBuffer) {
+                console.log("ArrayBuffer received: " + evt.data);
+            }
+            else if (evt.data instanceof Blob) {
+                console.log("Blob received: " + evt.data);
+            }
+        };
+
+        var socketLoadCodeBlueZone = new WebSocket(serviceLoadCodeBlueZone);
+        socketLoadCodeBlueZone.binaryType = "arraybuffer";
+
+        socketLoadCodeBlueZone.onopen = function(evt) {
+            console.log("Connection Established! message received: ");
+        };
+
+        socketLoadCodeBlueZone.onclose = function() {
+            console.log("Connection Closed!");
+        };
+
+        socketLoadCodeBlueZone.onerror = function(error) {
+            console.log("Error Occured: " + error.toString());
+        };
+
+        socketLoadCodeBlueZone.onmessage = function(evt) {
+            if (typeof evt.data === "string") {
+                console.log("String message received: " + evt.data);
+                var cb = "";
+                var oJson = jQuery.parseJSON(evt.data);
+                idCodeBlueAlert = oJson.name;
+                var zoneCX = ((oJson.xesi + oJson.xeid) / 2) * 6;
+                var zoneCY = ((oJson.yesi + oJson.yeid) / 2) * 6;
+                cb += "<circle id='" + oJson.name + "' cx='" + zoneCX + "' cy='" + zoneCY + "' r='5' class='employe' fill='blue'";
+                cb += "' ></circle>\n";
+                polylineList += cb;
+                document.getElementById("SVGCanvas").innerHTML = polylineList;
+                $("#" + idCodeBlueAlert).everyTime(10, function() {
+                    var cb = $("#" + idCodeBlueAlert);
+                    cb.fadeIn(400);
+                    cb.animate({height: '10px', width: '10px', opacity: '0.3'}, "slow");
+                    cb.slideToggle(300).delay(800);
+                    cb.attr({
+                        r: 5,
+                        opacity: 1
+                    });
+//                    cb.slideUp( 300 ).delay( 800 ).fadeIn( 400 );
+//                    cb.animate({r: '10px', opacity:'0.3'},"slow");
+                });
+
+//                    window.clearTimeout(timeoutID);
+
+            }
+            else if (evt.data instanceof ArrayBuffer) {
+                console.log("ArrayBuffer received: " + evt.data);
+            }
+            else if (evt.data instanceof Blob) {
+                console.log("Blob received: " + evt.data);
+            }
+        };
+
+        var socketLoadZones = new WebSocket(serviceLoadZones);
+        socketLoadZones.binaryType = "arraybuffer";
+
+        socketLoadZones.onopen = function(evt) {
+            console.log("Connection Established! message received: ");
+        };
+
+        socketLoadZones.onclose = function() {
+            console.log("Connection Closed!");
+        };
+
+        socketLoadZones.onerror = function(error) {
+            console.log("Error Occured: " + error.toString());
+        };
+
+        socketLoadZones.onmessage = function(evt) {
+            if (typeof evt.data === "string") {
+                console.log("String message received: " + evt.data);
+                var oJson = jQuery.parseJSON(evt.data);
+                for (var i = 0; i < oJson.length; i++) {
+                    var newOption = $("<option />",
+                            {
+                                value: oJson[i].id,
+                                text: oJson[i].name
+                            });
+                    $("#zone-selected").append(newOption);
+                }
+            }
+            else if (evt.data instanceof ArrayBuffer) {
+                console.log("ArrayBuffer received: " + evt.data);
+            }
+            else if (evt.data instanceof Blob) {
+                console.log("Blob received: " + evt.data);
+            }
+        };
+        
+        var socketCodeBlueAlertSimluator = new WebSocket(serviceCodeBlueAlertSimluator);
+        socketCodeBlueAlertSimluator.binaryType = "arraybuffer";
+
+        socketCodeBlueAlertSimluator.onopen = function(evt) {
+            console.log("Connection Established! message received: ");
+        };
+
+        socketCodeBlueAlertSimluator.onclose = function() {
+            console.log("Connection Closed!");
+        };
+
+        socketCodeBlueAlertSimluator.onerror = function(error) {
+            console.log("Error Occured: " + error.toString());
+        };
+
+        socketCodeBlueAlertSimluator.onmessage = function(evt) {
+            if (typeof evt.data === "string") {
+                console.log("String message received: " + evt.data);
+            }
+            else if (evt.data instanceof ArrayBuffer) {
+                console.log("ArrayBuffer received: " + evt.data);
+            }
+            else if (evt.data instanceof Blob) {
+                console.log("Blob received: " + evt.data);
+            }
+        };
+
+        
 //        if(socket.OPEN===1){
 //            socket.send("holaa");
 //        }
     } else {
         console.log("no connected! :(");
     }
-});
 
+    $("#boton-parar-alerta").click(function() {
+        $("#" + idCodeBlueAlert).stop(true).stopTime();
+        $("#" + idCodeBlueAlert).remove();
+    });
 
-
-$(function() {
-    $("#sendFile").click(function() {
-        var file = document.getElementById("fileName").files[0];
-        console.log("File name:" + file.name);
-        socket.send("file Name:" + file.name);
-        var reader = new FileReader();
-        var rawData = new ArrayBuffer();
-
-        reader.loadend = function() {
-
-        };
-
-        reader.onload = function(e) {
-            raawData = e.target.result;
-            socket.send(rawData);
-            alert("The file has been transfered");
-            socket.send("end");
-        };
-
-        reader.readAsArrayBuffer(file);
+    $("#lanzar-alerta").click(function() {
+        var idzona = $("#zone-selected").find(":selected").val();
+        socketCodeBlueAlertSimluator.send(idzona);
     });
 });
+
+
 
 function drawMap(json) {
 //    $.getJSON(json, function (content){
@@ -103,7 +245,7 @@ function drawMap(json) {
         }
 //    polylineList += "</g>";
         document.getElementById("SVGCanvas").innerHTML = polylineList;
-       
+
     } else {
         var employeList = "";
         var oJson = jQuery.parseJSON(json);
@@ -112,7 +254,7 @@ function drawMap(json) {
             for (var i = 0; i < oJson.length; i++) {
                 var zoneCX = ((oJson[i].zone.xesi + oJson[i].zone.xeid) / 2) * 6;
                 var zoneCY = ((oJson[i].zone.yesi + oJson[i].zone.yeid) / 2) * 6;
-                employeList += "<circle id='" + oJson[i].id + "' cx='" + zoneCX + "' cy='" + zoneCY + "' r='5' class='employe' fill='red' stroke='black' stroke-width='1'";
+                employeList += "<circle id='" + oJson[i].id + "' cx='" + zoneCX + "' cy='" + zoneCY + "' r='4' class='employe' fill='red'";
                 employeList += "' ></circle>\n";
             }
             polylineList += employeList;
@@ -122,13 +264,15 @@ function drawMap(json) {
             for (var i = 0; i < oJson.length; i++) {
                 var zoneCX = ((oJson[i].zone.xesi + oJson[i].zone.xeid) / 2) * 6;
                 var zoneCY = ((oJson[i].zone.yesi + oJson[i].zone.yeid) / 2) * 6;
-                 var circle = document.getElementById(oJson[i].id);
+                var circle = document.getElementById(oJson[i].id);
 //                document.getElementById(oJson[i].id).cy=zoneCY;
-                circle.setAttribute("cx",zoneCX);
-                circle.setAttribute("cy",zoneCY);
+                circle.setAttribute("cx", zoneCX);
+                circle.setAttribute("cy", zoneCY);
             }
         }
         map = 2;
     }
 }
+
+
 
