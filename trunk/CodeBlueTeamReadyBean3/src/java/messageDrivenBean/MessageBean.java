@@ -19,13 +19,16 @@ import methodology.MethodologyApplier;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "jms/zoneQueue")
 })
 public class MessageBean implements MessageListener {
+    
     @Resource(mappedName = "jms/teamReadyQueue")
     private Queue teamReadyQueue;
+    
+    @Resource(mappedName = "jms/alertSenderQueue")
+    private Queue alertSenderQueue;
+        
     @Inject
     @JMSConnectionFactory("jms/myQueueFactory")
     private JMSContext context;
-    
-
 
     public MessageBean() {
     }
@@ -44,6 +47,7 @@ public class MessageBean implements MessageListener {
             
             //send notice
             sendJMSMessageToTeamReadyQueue(tm.getText());
+            sendJMSMessageToAlertSenderQueue(tm.getText());
         } catch (JMSException jex) {
             System.out.println("Exception: " + jex);
         }
@@ -52,4 +56,9 @@ public class MessageBean implements MessageListener {
     private void sendJMSMessageToTeamReadyQueue(String messageData) {
         context.createProducer().send(teamReadyQueue, messageData);
     }
+    
+    private void sendJMSMessageToAlertSenderQueue(String messageData) {
+        context.createProducer().send(alertSenderQueue, messageData);
+    }
+    
 }
