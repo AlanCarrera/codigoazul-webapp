@@ -13,6 +13,7 @@ and open the template in the editor.
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
         <link rel="stylesheet" type="text/css" href="CSS/main_Style.css" />
         <script type="text/javascript" language="JavaScript" src="JS/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" language="JavaScript" src="JS/jquery.timers-1.1.2.js"></script>
         <script type="text/javascript" language="JavaScript" src="JS/loadHospital.js"></script>
 
     </head>
@@ -22,7 +23,7 @@ and open the template in the editor.
             <div id="logo">
                 <a href="index.html"><img src="images/logoooo.PNG"/></a>
             </div>
-            <nav>
+            <!--<nav>
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="hospital.jsp">Hopital</a></li>
@@ -41,13 +42,23 @@ and open the template in the editor.
                     </li>
                     <li><a href="#">Contacto</a></li>
                 </ul>
-            </nav>
+            </nav>-->
         </header>
         <section id="banner">
 
         </section>
         <section id="menuContent">
-            <h4></h4>
+            <h3>Codigo Azul</h3>
+            <button id="boton-parar-alerta">Parar Alerta</button>
+            <h3>Definir Alerta</h3>
+            <label for="zone-selected">Zona:</label>
+            <select id="zone-selected">
+                <option selected="selected">Seleccionar Zona...</option>
+            </select>
+            <button id="lanzar-alerta">Enviar alerta</button>
+            <h3>Monitoreo</h3>
+            <button id="parar-monitoreo">Pausar Monitoreo</button>
+            <button id="monitorear">Monitorear Personal</button>
         </section>
         <section id="bodyContent">
             <div id="divSVG" style="width: 538px; height: 538px; position: static; margin: 0px auto; text-align: center;">
