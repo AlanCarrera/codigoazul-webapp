@@ -38,7 +38,7 @@ public class Employes extends Table {
                 employe = new Employe(
                         renglon.getInt(1), 
                         renglon.getString(2),
-                        renglon.getInt(3),
+                        renglon.getString(3),
                         null,
                         new Position(renglon.getInt(4)),
                         null
@@ -66,7 +66,7 @@ public class Employes extends Table {
                 employe = new Employe(
                         renglon.getInt(2), 
                         null,
-                        0,
+                        null,
                         null,
                         new Position(renglon.getInt(4)),
                         null
