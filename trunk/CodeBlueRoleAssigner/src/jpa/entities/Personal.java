@@ -46,7 +46,7 @@ public class Personal implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "dispositivo")
-    private Integer dispositivo;
+    private String dispositivo;
     @JoinTable(name = "roles_personal", joinColumns = {
         @JoinColumn(name = "id_personal", referencedColumnName = "id_personal")}, inverseJoinColumns = {
         @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")})
@@ -83,11 +83,11 @@ public class Personal implements Serializable {
         this.nombre = nombre;
     }
 
-    public Integer getDispositivo() {
+    public String getDispositivo() {
         return dispositivo;
     }
 
-    public void setDispositivo(Integer dispositivo) {
+    public void setDispositivo(String dispositivo) {
         this.dispositivo = dispositivo;
     }
 
