@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistence;
-
 
 import com.bluecode.businessObjects.Map;
 import com.bluecode.businessObjects.MapCoords;
@@ -35,8 +33,8 @@ public class Zones extends Table {
             while ((renglon = obtenRenglon()) != null) {
 //                (int id, int area, String name, double xesi, double yesi, double xeid, double yeid)
                 Zone zone = new Zone(
-                        renglon.getInt(1), 
-                        renglon.getInt(2), 
+                        renglon.getInt(1),
+                        renglon.getInt(2),
                         renglon.getString(3),
                         renglon.getDouble(4),
                         renglon.getDouble(5),
@@ -52,8 +50,8 @@ public class Zones extends Table {
         }
         return listResult;
     }
-    
-        public Zone getZoneByEmploye(int idEmploye) throws PersistenciaException {
+
+    public Zone getZoneByEmploye(int idEmploye) throws PersistenciaException {
         Zone zone = null;
         ResultSet renglon;
         String sql = "call sp_getZoneByEmploye (" + idEmploye + ");";
@@ -62,8 +60,8 @@ public class Zones extends Table {
             if ((renglon = obtenRenglon()) != null) {
 //                (int id, int area, String name, double xesi, double yesi, double xeid, double yeid)
                 zone = new Zone(
-                        renglon.getInt(1), 
-                        renglon.getInt(2), 
+                        renglon.getInt(1),
+                        renglon.getInt(2),
                         renglon.getString(3),
                         renglon.getDouble(4),
                         renglon.getDouble(5),
@@ -80,5 +78,33 @@ public class Zones extends Table {
         }
         return zone;
     }
-    
+
+    public Zone getZoneById(int idZone) throws PersistenciaException {
+        Zone zone = null;
+        ResultSet renglon;
+        String sql = "call sp_getZoneById (" + idZone + ");";
+        try {
+            consulta(sql);
+            if ((renglon = obtenRenglon()) != null) {
+//                (int id, int area, String name, double xesi, double yesi, double xeid, double yeid)
+                zone = new Zone(
+                        renglon.getInt(1),
+                        renglon.getInt(2),
+                        renglon.getString(3),
+                        renglon.getDouble(4),
+                        renglon.getDouble(5),
+                        renglon.getDouble(6),
+                        renglon.getDouble(7)
+                );
+                close();
+                return zone;
+            }
+            close();
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
+        return zone;
+    }
+
 }

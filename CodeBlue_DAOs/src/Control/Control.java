@@ -64,8 +64,6 @@ public class Control implements IDAOs {
         teams.setConnection(conexion.getConexion());
         teams.updateCharacterOnZone(idPatient, idzona);
     }
-    
-    
 
     @Override
     public List<Zone> getZoneAll() throws PersistenciaException {
@@ -95,6 +93,25 @@ public class Control implements IDAOs {
         zones.setConnection(conexion.getConexion());
         Zone zone = zones.getZoneByEmploye(idZona);
         return zone;
+    }
+
+    @Override
+    public Zone getZoneById(int idZone) throws PersistenciaException {
+        prepararConexion();
+        Zones zones = new Zones();
+        zones.setConnection(conexion.getConexion());
+        Zone zone = zones.getZoneById(idZone);
+        prepararConexion();
+        return zone;
+    }
+
+    @Override
+    public List<Employe> getTeamResponse() throws PersistenciaException {
+        prepararConexion();
+        Employes employes = new Employes();
+        employes.setConnection(conexion.getConexion());
+        List<Employe> employeList = employes.getTeamResponse();
+        return employeList;
     }
 
 //    @Override
