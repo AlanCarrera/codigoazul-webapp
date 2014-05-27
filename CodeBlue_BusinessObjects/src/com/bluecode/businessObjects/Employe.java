@@ -14,7 +14,7 @@ public class Employe {
     
     private int id;
     private String nombre;
-    private int dispositivo;
+    private String dispositivo;
     private Zone zone;
     private Position position;
     private Role role;
@@ -26,7 +26,7 @@ public class Employe {
         this.id = id;
     }
 
-    public Employe(int id, String nombre, int dispositivo, Zone zone, Position position, Role role) {
+    public Employe(int id, String nombre, String dispositivo, Zone zone, Position position, Role role) {
         this.id = id;
         this.nombre = nombre;
         this.dispositivo = dispositivo;
@@ -51,11 +51,11 @@ public class Employe {
         this.nombre = nombre;
     }
 
-    public int getDispositivo() {
+    public String getDispositivo() {
         return dispositivo;
     }
 
-    public void setDispositivo(int dispositivo) {
+    public void setDispositivo(String dispositivo) {
         this.dispositivo = dispositivo;
     }
 
