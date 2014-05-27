@@ -54,4 +54,32 @@ public class Employes extends Table {
         return listResult;
     }
     
+       public List<Employe> getTeamResponse() throws PersistenciaException {
+        List<Employe> listResult = new ArrayList<>();
+        ResultSet renglon;
+        String sql = "call sp_getTeamResponse ();";
+        try {
+            consulta(sql);
+            //int id, String nombre, int dispositivo, Zone zone, Position position, Role role
+            while ((renglon = obtenRenglon()) != null) {
+                Employe employe;
+                employe = new Employe(
+                        renglon.getInt(2), 
+                        null,
+                        0,
+                        null,
+                        new Position(renglon.getInt(4)),
+                        null
+                );
+                listResult.add(employe);
+
+            }
+            close();
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
+        return listResult;
+    }
+    
 }

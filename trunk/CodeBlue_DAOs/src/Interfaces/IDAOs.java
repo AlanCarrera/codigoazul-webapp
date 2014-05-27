@@ -27,7 +27,9 @@ public interface IDAOs {
     public void updateCharacterOnZone(int idemploye, int idzona) throws PersistenciaException;
     public List<Zone> getZoneAll() throws PersistenciaException;
     public List<Employe> getEmployeAll() throws PersistenciaException;
+    public List<Employe> getTeamResponse() throws PersistenciaException;
     public Zone getZoneByEmploye(int idEmploye) throws PersistenciaException;
     public void blueCodeAlert(int idPatient, int idzona) throws PersistenciaException;
+    public Zone getZoneById(int idZone) throws PersistenciaException;
     
 }
