@@ -12,7 +12,6 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
-import methodology.MethodologyApplier;
 
 @MessageDriven(mappedName = "jms/zoneQueue", activationConfig = {
     @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
@@ -38,14 +37,9 @@ public class MessageBean implements MessageListener {
         try {
             TextMessage tm = (TextMessage) message;
             
-            System.out.println("Código azul en área " + tm.getText() + "! Formando equipo de respuesta...");
-
-            MethodologyApplier methodology = new MethodologyApplier(tm.getText());
-            methodology.formResponseTeam();
+            System.out.println("Código azul en área " + tm.getText() + "!");
+            System.out.println("Enviando notificaciones...");
             
-            System.out.println("Equipo creado. Enviando notificaciones...");
-            
-            //send notice
             sendJMSMessageToTeamReadyQueue(tm.getText());
             sendJMSMessageToAlertSenderQueue(tm.getText());
         } catch (JMSException jex) {
