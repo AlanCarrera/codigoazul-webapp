@@ -29,12 +29,12 @@ public class Control implements IDAOs {
     private String pas;
 
     public Control() {
-//        url = "jdbc:mysql://10.1.4.33:3306/codigo_azul";
-//        usr = "userCodigoAzul";
-//        pas = "codigoazul";
-        url = "jdbc:mysql://localhost:3306/codigo_azul";
-        usr = "root";
-        pas = "itson";
+        url = "jdbc:mysql://10.1.4.33:3306/codigo_azul";
+        usr = "userCodigoAzul";
+        pas = "codigoazul";
+//        url = "jdbc:mysql://localhost:3306/codigo_azul";
+//        usr = "root";
+//        pas = "itson";
     }
 
     private void prepararConexion() throws PersistenciaException {
