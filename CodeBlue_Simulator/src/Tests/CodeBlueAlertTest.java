@@ -21,7 +21,7 @@ public class CodeBlueAlertTest {
     }
 
     private static void alert(int idPaciente, double x, double y) {
-        System.out.println("hii");
+        System.out.println("hii");        
         com.codeblue.webservices.CodeBlueAlert_Service service = new com.codeblue.webservices.CodeBlueAlert_Service();
         com.codeblue.webservices.CodeBlueAlert port = service.getCodeBlueAlertPort();
         port.alert(idPaciente, x, y);
