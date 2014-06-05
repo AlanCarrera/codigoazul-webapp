@@ -5,11 +5,10 @@
  */
 package org.itson.codeblue.alertsender;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,6 +22,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import jpa.entities.EquipoBase;
+import jpa.entities.EquipoRespuesta;
 import methodology.MethodologyApplier;
 
 /**
@@ -42,7 +42,7 @@ public class AlertSenderQueue implements MessageListener {
     public void onMessage(Message message) {
         try {
             TextMessage tm = (TextMessage) message;
-            List<EquipoBase> team = formResponseTeam(tm);
+            List<EquipoRespuesta> team = formResponseTeam(tm);            
             String json = serializeResponseTeam(team);
             System.out.println(json);
             connectToAlertServer(json);
@@ -51,22 +51,32 @@ public class AlertSenderQueue implements MessageListener {
         }
     }
     
-    private List<EquipoBase> formResponseTeam(TextMessage message) throws JMSException {
+    private List<EquipoRespuesta> formResponseTeam(TextMessage message) throws JMSException {
         MethodologyApplier methodology = new MethodologyApplier(message.getText());
         List<EquipoBase> team = methodology.formResponseTeam();
-        return team;
+        List<EquipoRespuesta> respuesta = methodology.convertToResponseTeam(team);
+        return respuesta;
     }
     
-    private String serializeResponseTeam(List<EquipoBase> team) {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<EquipoBase>>() {}.getType();
-        String json = gson.toJson(team, type);
-        return json;
+    private String serializeResponseTeam(List<EquipoRespuesta> team) {
+        JsonArray array = new JsonArray();
+        
+        for (EquipoRespuesta e : team) {
+            JsonObject other = new JsonObject();
+            other.addProperty("idEquipoRespuesta", e.getIdEquipoRespuesta());
+            other.addProperty("idPersonal", e.getIdPersonal().getIdPersonal());
+            other.addProperty("idRol", e.getIdRol().getIdRol());
+            other.addProperty("idZona", e.getIdZona().getIdZona());
+            other.addProperty("idDispositivo", e.getIdPersonal().getDispositivo());
+            array.add(other);
+        }
+        
+        return array.toString();
     }
 
     private void connectToAlertServer(String json) {
         try {
-            URL url = new URL("http://localhost:3000/bluecode");
+            URL url = new URL("http://10.1.4.33:3000/bluecode");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
