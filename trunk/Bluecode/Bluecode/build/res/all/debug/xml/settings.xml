@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/connection_group" >
+        <EditTextPreference
+            android:dialogTitle="@string/connection_address_title"
+            android:key="address"
+            android:summary="@string/connection_address_summary"
+            android:title="@string/connection_address_title" />
+        <EditTextPreference
+            android:dialogTitle="@string/connection_port_title"
+            android:inputType="number"
+            android:key="port"
+            android:summary="@string/connection_port_summary"
+            android:title="@string/connection_port_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/behavior_group" >
+        <CheckBoxPreference
+            android:key="enable_arduino"
+            android:summary="@string/behavior_arduino_summary"
+            android:title="@string/behavior_arduino_title" />
+        <CheckBoxPreference
+            android:key="enable_alarm"
+            android:summary="@string/behavior_alarm_summary"
+            android:title="@string/behavior_alarm_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen><!-- From: file:/D:/Bluecode/Bluecode/src/main/res/xml/settings.xml -->

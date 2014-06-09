@@ -44,7 +44,6 @@ public class AlertSenderQueue implements MessageListener {
             TextMessage tm = (TextMessage) message;
             List<EquipoRespuesta> team = formResponseTeam(tm);            
             String json = serializeResponseTeam(team);
-            System.out.println(json);
             connectToAlertServer(json);
         } catch (JMSException ex) {
             Logger.getLogger(AlertSenderQueue.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,11 +62,10 @@ public class AlertSenderQueue implements MessageListener {
         
         for (EquipoRespuesta e : team) {
             JsonObject other = new JsonObject();
-            other.addProperty("idEquipoRespuesta", e.getIdEquipoRespuesta());
-            other.addProperty("idPersonal", e.getIdPersonal().getIdPersonal());
-            other.addProperty("idRol", e.getIdRol().getIdRol());
-            other.addProperty("idZona", e.getIdZona().getIdZona());
-            other.addProperty("idDispositivo", e.getIdPersonal().getDispositivo());
+            other.addProperty("name", e.getIdPersonal().getNombre());
+            other.addProperty("role", e.getIdRol().getNombre());
+            other.addProperty("zone", e.getIdZona().getNombre());
+            other.addProperty("device", e.getIdPersonal().getDispositivo());
             array.add(other);
         }
         

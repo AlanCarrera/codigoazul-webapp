@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="bluecode">Bluecode</string>
+    <string name="action_settings">Configuración</string>
+    <string name="settings">Configuración</string>
+    <string name="connection_group">Conexión</string>
+    <string name="connection_address_title">Servidor</string>
+    <string name="connection_address_summary">Dirección del servidor</string>
+    <string name="connection_port_title">Puerto</string>
+    <string name="connection_port_summary">Número de puerto para el servidor</string>
+    <string name="connection_path_title">Ruta</string>
+    <string name="connection_path_summary">Ruta absoluta hacia el recurso</string>
+    <string name="behavior_group">Comportamiento</string>
+    <string name="behavior_arduino_title">Habilitar Arduino</string>
+    <string name="behavior_arduino_summary">Indica si se debe conectar con un dispositivo Arduino cuando ocurra un nuevo evento</string>
+    <string name="behavior_alarm_title">Habilitar Alarma</string>
+    <string name="behavior_alarm_summary">Indica si se debe sonar una alarma cuando ocurra un nuevo evento</string>
+    <string name="title_activity_bluecode">Bluecode</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="alert">¡ CÓDIGO AZUL !</string>
+    <string name="name">Nombre:</string>
+    <string name="zone">Zona:</string>
+    <string name="role">Rol:</string>
+    <string name="accept">Entendido</string>
+
+</resources>
