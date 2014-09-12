@@ -16,60 +16,308 @@ and open the template in the editor.
         <script type="text/javascript" language="JavaScript" src="JS/jquery.timers-1.1.2.js"></script>
         <script type="text/javascript" language="JavaScript" src="JS/loadHospital.js"></script>
 
+        <!-- Overloap menu -->
+        <link rel="shortcut icon" href="../favicon.ico">
+        <link rel="stylesheet" type="text/css" href="CSS/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="CSS/icons.css" />
+        <link rel="stylesheet" type="text/css" href="CSS/component.css" />
+        <script type="text/javascript" language="JavaScript" src="JS/classie.js"></script>
+        <script type="text/javascript" language="JavaScript" src="JS/mlpushmenu.js"></script>
+        <script type="text/javascript" language="JavaScript" src="JS/modernizr.custom.js"></script>
+
+        <!-- Heart SVG Alert Style -->
+        <link rel="stylesheet" type="text/css" href="CSS/heart_Style.css" />
+        <!--<script type="text/javascript" language="JavaScript" src="JS/heartAliveAnimation.js"></script> -->
+
+        <!-- Zoom y Overflow sobre elementos SVG -->
+        <script type="text/javascript" language="JavaScript" src="JS/SVGOverflow.js"></script>
+
     </head>
     <body>
+        <div class="container">
+            <!-- Push Wrapper -->
+            <div class="mp-pusher" id="mp-pusher">
 
-        <header id="headerContent">
-            <div id="logo">
-                <a href="index.html"><img src="images/logoooo.PNG"/></a>
-            </div>
-            <!--<nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="hospital.jsp">Hopital</a></li>
-                    <li><a href="#">Configuraci&oacute;n</a>
+                 <!-- mp-menu -->
+                <nav id="mp-menu" class="mp-menu">
+                    <div class="mp-level">
+                        <h2 class="icon icon-world">Men&uacute;</h2>
+                        <a class="mp-back" href="#">Regresar</a>
                         <ul>
-                            <li><a href="mapsConfiguration.jsp">Mapa</a></li>
-                            <li><a href="#">Personal</a></li>
-                            <li><a href="#">Pacientes</a></li>
+                            <li><a class="icon icon-heart" href="#">C&oacute;digo Azul</a></li>
+                            <li class="icon icon-arrow-left">
+                                <a class="icon icon-phone" href="#">Dispositivos</a>
+                                <div class="mp-level">
+                                    <h2 class="icon icon-phone">Dispositivos</h2>
+                                    <a class="mp-back" href="#">Regresar</a>
+                                    <ul>
+                                        <li><a class="icon icon-phone" href="#">Smartphones</a></li>
+                                        <li><a class="icon icon-location" href="#">Localizaci&oacute;n</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="icon icon-arrow-left">
+                                <a class="icon icon-news" href="#">Historial</a>
+                                <div class="mp-level">
+                                    <h2 class="icon icon-news">Historial</h2>
+                                    <a class="mp-back" href="#">Regresar</a>
+                                    <ul>
+                                        <li><a href="#">C&oacute;digos Activados</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="icon icon-arrow-left">
+                                <a class="icon icon-paperplane" href="#">Estadisticas</a>
+                                <div class="mp-level">
+                                    <h2 class="icon icon-paperplane">Estadisticas</h2>
+                                    <a class="mp-back" href="#">Regresar</a>
+                                    <ul>
+                                        <li><a href="#">Tiempos C&oacute;digo Azul</a></li>
+                                        <li><a href="#">C&oacute;digo Azul Semanales</a></li>
+                                        <li><a href="#">Personal en C&oacute;digo Azul</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="icon icon-arrow-left">
+                                <a class="icon icon-settings" href="#">Configuraci&oacute;n</a>
+                                <div class="mp-level">
+                                    <h2 class="icon icon-settings">Configuraci&oacute;n</h2>
+                                    <a class="mp-back" href="#">Regresar</a>
+                                    <ul>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-male" href="#">Personal</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-male">Personal</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-male" href="#">Roles</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-male" >Roles</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-male" href="#">Puestos</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-male" >Puestos</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-male" href="#">Equipo Base</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-male" >Equipo Base</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-photo" href="#">Planos</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-photo">Planos</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="icon icon-arrow-left">
+                                            <a class="icon icon-photo" href="#">Zonas</a>
+                                            <div class="mp-level">
+                                                <h2 class="icon icon-photo">Zonas</h2>
+                                                <a class="mp-back" href="#">Regresar</a>
+                                                <ul>
+                                                    <li><a class="icon icon-clip" href="#">Agregar</a></li>
+                                                    <li><a class="icon icon-pen" href="#">Modficar</a></li>
+                                                    <li><a class="icon icon-trash" href="#">Eliminar</a></li>
+                                                    <li><a class="icon icon-search" href="#">Consultar</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a class="icon icon-wallet" href="#">Notificaciones</a></li>
                         </ul>
-                    </li>
-                    <li><a href="#">Ayuda</a>
-                        <ul>
-                            <li><a href="#">Manual de Usuario</a></li>
-                            <li><a href="#">Preguntas</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Contacto</a></li>
-                </ul>
-            </nav>-->
-        </header>
-        <section id="banner">
+                    </div>
+                </nav>
+                <!-- /mp-menu -->
 
-        </section>
-        <section id="menuContent">
-            <h3>Codigo Azul</h3>
-            <button id="boton-parar-alerta">Parar Alerta</button>
-            <h3>Definir Alerta</h3>
-            <label for="zone-selected">Zona:</label>
-            <select id="zone-selected">
-                <option selected="selected">Seleccionar Zona...</option>
-            </select>
-            <button id="lanzar-alerta">Enviar alerta</button>
-            <h3>Monitoreo</h3>
-            <button id="parar-monitoreo">Pausar Monitoreo</button>
-            <button id="monitorear">Monitorear Personal</button>
-        </section>
-        <section id="bodyContent">
-            <div id="divSVG" style="width: 538px; height: 538px; position: static; margin: 0px auto; text-align: center;">
-                <svg id="SVGCanvas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
-                </svg>
-            </div>
-        </section>
-        <section id="propertiesContent">
-        </section>
-        <footer>
-            <h1></h1>
-        </footer>
+                <div class="scroller"><!-- this is for emulating position fixed of the nav -->
+                    <div class="scroller-inner">
+                        <!-- Top Navigation -->
+                        <header id="headerContent">
+                            <div id="logo">
+                                <p><a href="#" id="trigger" class="menu-trigger" title="Menu"></a></p>
+                                <!--<a href="index.html"><img src="images/logoooo.PNG"/></a>-->
+                            </div>
+                            <!--<nav>
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="hospital.jsp">Hopital</a></li>
+                                    <li><a href="#">Configuraci&oacute;n</a>
+                                        <ul>
+                                            <li><a href="mapsConfiguration.jsp">Mapa</a></li>
+                                            <li><a href="#">Personal</a></li>
+                                            <li><a href="#">Pacientes</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Ayuda</a>
+                                        <ul>
+                                            <li><a href="#">Manual de Usuario</a></li>
+                                            <li><a href="#">Preguntas</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Contacto</a></li>
+                                </ul>
+                            </nav>-->
+                        </header>
+                        <section id="banner">
+
+                        </section>
+                        <section id="menuContent">
+                            <div id="pagewrap" title="Activar/Desactivar Cdodigo Azul">
+                                <!-- Heart SVG Markup Goes Here-->
+                                <svg version="1.1" x="0px" y="0px" width="300px" height="300px" id="heart" onclick="setAlertaCodigoAzul(this)">
+                                <circle class="icon-animated icon-circle" cx="149.5" cy="150" r="110"/>
+                                <g class="heart-inner">
+                                <path class="icon-animated icon-heart" d="M211.001,134.484c0.1,1.232,0.166,2.486,0.166,3.779c0,26.437-34.414,64.086-61.379,83.918
+                                      c-26.965-19.832-61.378-57.481-61.378-83.918c0-0.595,0.052-1.159,0.076-1.739c-0.071-0.882-0.204-1.782-0.204-2.641
+                                      c0-26.442,21.572-40.238,35.954-40.238c14.382,0,23.113,9.199,25.425,12.933c2.312-3.734,11.043-12.933,25.425-12.933
+                                      s35.954,13.796,35.954,40.238c0,0.229-0.049,0.473-0.055,0.704C210.988,134.552,210.998,134.517,211.001,134.484z M190.579,139.439
+                                      c-0.463,0-0.911,0.07-1.345,0.177c-3.454,0.814-4.222,3.176-8.789,3.176h-20.481l-3.413-15.122c-0.803-3.595-3.413-3.78-3.413-3.78
+                                      c-0.947,0.011-3.212,2.555-3.425,3.586l-3.402,19.097l-3.413-11.341c-0.278-0.934-2.585-0.373-3.467-0.373
+                                      c-0.881,0,0.333-0.562,0.053,0.373l-3.787,7.223l-3.04-22.344c-0.475,0-6.678-1.109-6.827,0l-3.413,37.805l-6.827-15.122
+                                      c-0.362-0.729-2.67,0-3.413,0h-10.24c-1.131,0-1.946,2.411-1.39,3.514c1.267,2.515,0.958,3.07,4.803,4.047h6.827l10.24,18.902h6.827
+                                      V135.23l4.101,16.189c0.206,1,0.981,1.724,1.898,1.773c0.016,0,0.032,0,0.048,0c0.875,0,1.706-0.608,1.99-1.565l2.203-5.056
+                                      l4.145,11.906c0.28,0.944,1.041,1.568,1.956,1.568c0.028,0,0.054-0.002,0.082-0.002c0.915-0.049,1.691-0.773,1.896-1.773
+                                      l4.224-20.483l2.028,9.076c0.228,1.017,1.798,3.49,2.737,3.49h23.894h-3.413c4.571,0,8.752,1.838,12.213,2.648
+                                      c0.394,0.098,0.799,0.152,1.219,0.161l0.116,0.013c3.389,0,6.138-3.077,6.138-6.869S193.968,139.439,190.579,139.439z"/>
+                                </g>
+                                </svg>
+                            </div>
+                            <h2 id="zona-alerta" title="Ultima Alerta Activada"></h2>
+                            <!-- 
+                            <h2>Opciones</h2>
+                            <div id="opciones">
+                                <label for="zone-selected" title="Define la Zona donde sera lanzada una alerta de Codigo Azul">Zona </label>
+                                <select id="zone-selected">
+                                    <option selected="selected">Seleccionar Zona...</option>
+                                </select>
+                            </div>-->
+                        </section>
+                        <section id="bodyContent">
+                            <!--<div id="divSVG" style="width: 538px; height: 538px; position: static; margin: 0px auto; text-align: center;">-->
+                            <svg id="SVGCanvas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width: 100%; height: 80%;">
+                            <g id="viewport" transform="translate(0,0)">
+                            <!-- Aqui se inserta el contenido del plano -->
+                            </g>
+                            
+                            </svg>
+                            <!--</div>-->
+                        </section>
+                        <section id="propertiesContent">
+                            <h2>Detalles</h2>
+                            <div id="info-detalle">
+                                
+                            </div>
+                        </section>
+                        <footer>
+                            <h1></h1>
+                        </footer>
+                    </div><!-- /scroller-inner -->
+                </div><!-- /scroller -->
+
+            </div><!-- /pusher -->
+        </div><!-- /container -->
+
+        <!-- SVG Icons map -->
+        <svg version="1.1" style="display: none;">
+        <defs>
+        <path id="icon-doctor" style="" d="M12.476,5.94c-0.002,0.008-0.003,0.016-0.005,0.024c-0.001-0.002-0.002-0.004-0.002-0.006
+              c-0.036,0.14-0.114,0.267-0.232,0.346l-1.711,1.191l1.72,1.197c0.187,0.127,0.272,0.368,0.243,0.602
+              c-0.001,0.01-0.003,0.019-0.004,0.028c-0.005,0.03-0.004,0.06-0.013,0.089c-0.002-0.006-0.006-0.011-0.008-0.017
+              c-0.012,0.046-0.018,0.093-0.04,0.136l-1.042,2.07c-0.096,0.191-0.269,0.297-0.447,0.297c-0.088,0-0.178-0.026-0.26-0.082
+              l-1.627-1.132v2.217c0,0.331-0.231,0.599-0.517,0.599H6.464c-0.285,0-0.517-0.268-0.517-0.599v-2.218l-1.628,1.133
+              c-0.082,0.055-0.171,0.082-0.26,0.082c-0.178,0-0.351-0.106-0.447-0.297l-1.042-2.07C2.427,9.245,2.51,8.879,2.757,8.712
+              l1.729-1.204L2.756,6.304C2.51,6.137,2.427,5.771,2.57,5.485l1.042-2.07c0.096-0.191,0.269-0.297,0.447-0.297
+              c0.088,0,0.178,0.026,0.26,0.082l1.628,1.133V2.119c0-0.089,0.019-0.171,0.048-0.247C6.073,1.654,6.257,1.5,6.473,1.5H8.54
+              c0.285,0,0.517,0.268,0.517,0.599v0.399c0-0.018-0.008-0.033-0.009-0.051v1.885l0.009-0.006V4.313l1.627-1.133
+              c0.246-0.167,0.563-0.07,0.707,0.216l1.042,2.07c0.075,0.149,0.084,0.319,0.044,0.473C12.477,5.939,12.476,5.939,12.476,5.94z
+              M7.931,3.5V2.833l0,0c-0.004-0.215-0.25-0.564-0.434-0.564c-0.002,0-0.005,0-0.007,0C7.302,2.273,7.059,2.616,7.062,2.833V3.5
+              C6.476,3.638,6.349,4.442,6.523,4.696C6.69,4.94,7.844,4.68,7.844,5.103c0,0.049-0.018,0.1-0.051,0.155l0-0.019L7.793,5.064
+              c0,0-0.058-0.006-0.139-0.006c-0.148,0-0.22-0.013-0.302,0.109V7.5C7.201,7.332,6.981,7.214,6.981,7.061
+              c0-0.048,0.027-0.108,0.072-0.178l-0.01-0.856C6.738,6.342,6.464,6.718,6.464,7.173c0,0.846,1.378,1.359,1.378,1.885
+              c0,0.11-0.047,0.23-0.118,0.357l0.007-0.405C7.637,8.907,7.491,8.942,7.352,8.833v2.333c-0.087-0.113-0.199-0.004-0.199-0.112
+              l-0.042-0.777c-0.17,0.253-0.302,0.515-0.302,0.777c0,0.332,0.306,0.555,0.543,0.779V12.5c0.002,0.108,0.047,0.249,0.141,0.251
+              c0.001,0,0.002,0,0.003,0c0.095,0,0.173-0.088,0.175-0.199l0.004-0.232v0.209c0,0,0.167-0.022,0.167-0.362
+              c0-0.111-0.109-0.219-0.201-0.335v-1.667c0.316-0.375,0.717-0.716,0.717-1.024c0-0.415-0.4-0.656-0.717-0.976v-2
+              c0.341-0.352,0.815-0.808,0.89-1.102C8.679,4.484,8.527,3.684,7.931,3.5z"/>
+        <g id="icon-nurse">
+        <path style="" d="M7.569,6.003c-0.043,0-0.065,0.001-0.065,0.001S7.48,6.003,7.438,6.003c-0.342,0-1.953,0.059-3.111,1.125
+              L3.8,6.631C3.03,7.54,2.5,8.832,2.5,10.581c0,2.318,2.035,2.891,3.686,2.919c-1.035-0.621-1.892-1.893-1.892-3.072
+              c0-1.534,1.149-2.885,2.018-3.28L6.295,7.167c1.161,0.659,2.262,1.266,3.598,1.266c0.098,0,0.198-0.003,0.299-0.01
+              c0.233,0.387,0.515,1.421,0.515,2.006c0,1.074-0.741,2.227-1.633,2.893c0.142,0.015,0.31,0.025,0.495,0.025
+              c1.149,0,2.931-0.409,2.931-2.766c0-1.542-0.628-2.823-1.475-3.778L10.68,7.128C9.523,6.061,7.911,6.003,7.569,6.003"/>
+        <path style="" d="M11.958,4.104C11.529,3.313,10.245,1.5,7.5,1.5c-2.745,0-4.029,1.813-4.458,2.604
+              c-0.462,0.852,0,1.252,0,1.252l1.281,1.21C5.625,5.368,7.5,5.442,7.5,5.442s1.876-0.075,3.177,1.125l1.282-1.21
+              C11.958,5.357,12.421,4.956,11.958,4.104z M8.874,3.924H7.958v0.97H7.042v-0.97H6.126v-0.97h0.916v-0.97h0.916v0.97h0.916V3.924z"/>
+        </g>
+        <g id="icon-car">
+        <path style="" d="M4.318,6.409c-0.092,0-0.28,0.042-0.28-0.134V5.638c0-0.175,0.074-0.318,0.166-0.318l0.391-0.002V4.227
+              c0-0.176-0.092,0,0,0h0.553c0.092,0,0-0.176,0,0v1.091h0.553c0.092,0,0-0.175,0,0v1.091c0,0.176,0.092,0,0,0H5.148V7.5
+              c0,0.176,0.092,0,0,0H4.871c-0.092,0-0.277-0.056-0.277,0V6.409H4.318 M7.915,1.5H2.713c-0.183,0-0.332,0.285-0.332,0.637v9.727l0,0
+              h1.107c0-1.23,0.41-2.405,1.051-2.405c0.642,0,1.162,1.175,1.162,2.405h2.214V1.5"/>
+        <path style="" d="M12.185,10.413H12.01v-0.318l-0.221,0.132c0.01-0.013,0-0.379,0-0.545V8.591c0-0.166-0.087,0,0,0h0.277V7.5
+              c0-0.499-0.293-0.545-0.553-0.545h-0.83c-0.235-0.451-0.666-1.513-0.735-1.646C9.844,5.111,9.626,4.683,9.292,4.683
+              c-0.237,0-0.857,0.09-1.101,0.09v7.091h1.384c0,0.151,0,0.001,0,0c0-1.23,0.463-2.409,1.105-2.409c0.435,0,0.909,0.641,1.109,1.318
+              c-0.009,0.038,0-0.044,0,0v0.545c0,0.167-0.087,0.545,0,0.545h0.553c0.087,0,0-0.312,0-0.478v-0.671
+              C12.342,10.548,12.272,10.413,12.185,10.413z"/>
+        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#F0513E;" d="M8.211,2.091H7.934c-0.173,0-0.277,0.213-0.277,0.545v1.091h0.83V2.636C8.487,2.304,8.384,2.091,8.211,2.091"
+              />
+        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#F0513E;" d="M4.594,10.227c0.458,0,0.83,0.733,0.83,1.636c0,0.904-0.372,1.636-0.83,1.636c-0.458,0-0.83-0.733-0.83-1.636
+              C3.764,10.96,4.136,10.227,4.594,10.227z"/>
+        <path style="fill-rule:evenodd;clip-rule:evenodd;fill:#F0513E;" d="M10.682,10.227c0.458,0,0.83,0.733,0.83,1.636c0,0.904-0.372,1.636-0.83,1.636
+              c-0.458,0-0.83-0.733-0.83-1.636C9.852,10.96,10.223,10.227,10.682,10.227z"/>
+        </g>
+        </defs>
+        </svg>
+
+        <script>
+            new mlPushMenu(document.getElementById('mp-menu'), document.getElementById('trigger'));
+
+            //var heart = document.querySelector('#heart');
+            //heart.addEventListener('click', function() {
+            //    this.classList.toggle('clicked');
+            //});
+        </script>
     </body>
 </html>

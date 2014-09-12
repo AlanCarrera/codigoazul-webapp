@@ -1,0 +1,232 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 16, 2014, 7:11:23 PM
+    Author     : Laser Marker
+*/
+
+#heart {
+    display: block;
+    margin: 0 auto;
+    /*margin-top: 150px;*/
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/*=============================================
+[ Inactive State Styles ]
+==============================================*/
+#heart .icon-heart{
+    -webkit-transform: scale(0.5, 0.5);
+    /*-webkit-transform: translate(5px,5px);*/
+    -webkit-transform-origin: center center;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+#heart .icon-circle {
+    transition: .2s;
+    fill: #22303e;
+}
+
+#heart .icon-heart { 
+    fill: #34495e;
+    /*transition: .2s;*/
+}
+
+/*=============================================
+[ Hover Styles ]
+==============================================*/
+#heart:hover .icon-circle {
+    fill: #56B1C3;
+    stroke: #fff;
+    stroke-width: 3px;
+}
+
+#heart:hover .icon-heart {
+    -webkit-transform: scale(1, 1);
+    fill: #fff;
+}
+
+/*=============================================
+[ Clicked Styles ]
+==============================================*/
+/*#heart.clicked .icon-circle {
+    fill: #56B1C3 !important;
+    stroke: #fff !important;
+    stroke-width: 3px !important;
+}
+
+#heart.clicked .icon-heart {
+    fill: #fff !important;
+    stroke: #fff !important;
+}*/
+
+/*=============================================
+[ Animation Classes ]
+==============================================*/
+.icon-animated {
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: normal;
+    animation-direction: normal;
+}
+
+#heart.clicked .icon-circle {
+    /*    -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        animation-direction: normal;*/
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-name: circleAlive;
+    animation-name: circleAlive;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+}
+
+#heart.clicked .icon-heart {
+    /*    -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-direction: normal;
+        animation-direction: normal;*/
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-name: heartAlive;
+    animation-name: heartAlive;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+}
+
+/*=============================================
+[ KeyFrame Animations ]
+==============================================*/
+@-webkit-keyframes heartAlive {
+    0%{
+        fill: #56B1C3;
+        -webkit-transform: scale(1.2, 1.2);
+        -webkit-transform-origin: center center;
+    }
+    50%{
+        fill: #fff;
+        -webkit-transform: scale(0.8, 0.8);
+        -webkit-transform-origin: center center;
+    }
+}
+
+@-webkit-keyframes circleAlive {
+    0%{
+        fill: #fff;
+        stroke: #56B1C3;
+        stroke-width: 3px;
+    }
+    50%{
+        fill: #56B1C3;
+        stroke: #fff;
+        stroke-width: 3px;
+    }
+}
+
+@keyframes heartAlive {
+    0%{
+        fill: #56B1C3;
+        -webkit-transform: scale(1.2, 1.2);
+        -webkit-transform-origin: center center;
+    }
+    50%{
+        fill: #fff;
+        -webkit-transform: scale(0.8, 0.8);
+        -webkit-transform-origin: center center;
+    }
+}
+
+@keyframes circleAlive {
+    0%{
+        fill: #fff;
+        stroke: #56B1C3;
+        stroke-width: 3px;
+    }
+    50%{
+        fill: #56B1C3;
+        stroke: #fff;
+        stroke-width: 3px;
+    }
+}
+
+#heart {
+    display: block;
+    margin: 0 auto;
+    /*margin-top: 150px;*/
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/*=============================================
+[ Inactive State Styles ] : Corazon dentro del mapa
+==============================================*/
+#heart-map .icon-heart-map{
+    -webkit-transform: scale(0.1, 0.1);
+    /*-webkit-transform: translate(5px,5px);*/
+    -webkit-transform-origin: center center;
+    -webkit-transition: .3s;
+    transition: .3s;
+    fill: #56B1C3;
+    fill-opacity : 0;
+}
+
+/*=============================================
+[ Animation Classes ] : Corazon dentro del mapa.
+==============================================*/
+
+
+#heart-map.activated .icon-heart-map {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-name: corazonMapa;
+    animation-name: corazonMapa;
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    fill-opacity : 1;
+}
+
+/*=============================================
+[ KeyFrame Animations ] : Corazon dentro del mapa
+==============================================*/
+@-webkit-keyframes corazonMapa {
+    0%{
+        fill: #56B1C3;
+        -webkit-transform: scale(0.1, 0.1);
+        -webkit-transform-origin: center center;
+    }
+    50%{
+        fill: #fff;
+        stroke: #56B1C3;
+        stroke-width: 2px;
+        -webkit-transform: scale(0.2, 0.2);
+        -webkit-transform-origin: center center;
+    }
+}
+
+@keyframes corazonMapa {
+    0%{
+        fill: #56B1C3;
+        -webkit-transform: scale(0.1, 0.1);
+        -webkit-transform-origin: center center;
+    }
+    50%{
+        fill: #fff;
+        stroke: #56B1C3;
+        stroke-width: 2px;
+        -webkit-transform: scale(0.2, 0.2);
+        -webkit-transform-origin: center center;
+    }
+}

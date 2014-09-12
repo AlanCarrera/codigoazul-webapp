@@ -28,44 +28,10 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/endpoint/loadCodeBlueZone")
 public class LoadCodeBlueZone {
 //queue publisher thread of connected clients
-    private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
-//    private static Thread thread;
-//
-//    static {
-//        thread = new Thread() {
-//            public void run() {
-//                while (true) {
-//
-//                    if (queue != null) {
-//                        try {
-//                            IDAOs daos = new Control();
-//                            List<Employe> employeList = daos.getEmployeAll();
-//                            for (int i = 0; i < employeList.size(); i++) {
-//                                Zone zone = daos.getZoneByEmploye(employeList.get(i).getId());
-//                                if (zone != null) {
-//                                    employeList.get(i).setZone(zone);
-//                                }
-//                            }
-//                            sendAll(employeList);
-//                        } catch (PersistenciaException ex) {
-//                            Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
-//
-//                    try {
-//                        sleep(2000);
-//                    } catch (InterruptedException ie) {
-//
-//                    }
-//                }
-//            }
-//        };
-//        thread.start();
-//    }
+    private static Queue<Session> queue = new ConcurrentLinkedQueue<>();
 
     @OnMessage
     public String onMessage(String message) {
-
         return message;
     }
 
@@ -73,32 +39,6 @@ public class LoadCodeBlueZone {
     public void open(Session session, EndpointConfig conf) {
         System.out.println("Se abrio una nueva conexion, session: " + session.getId() + ", config: " + conf.toString());
         queue.add(session);
-//        try {
-//            IDAOs daos = new Control();
-//            List<Map> maps = daos.getMapAll();
-//            Gson gson = new Gson();
-//            for (int i = 0; i < maps.size(); i++) {
-//                for (int j = 0; j < maps.get(i).getCoordenadas().size(); j++) {
-//                    maps.get(i).getCoordenadas().get(j).setX((maps.get(i).getCoordenadas().get(j).getX() * 6));
-//                    System.out.println(maps.get(i).getCoordenadas().get(j).getX() * 6);
-//                    maps.get(i).getCoordenadas().get(j).setY((maps.get(i).getCoordenadas().get(j).getY() * 6));
-//                    System.out.println(maps.get(i).getCoordenadas().get(j).getY() * 6);
-//                }
-//            }
-//            List<Object> jsonMap = new ArrayList<Object>();
-//            jsonMap.addAll(maps);
-//            String MapsJson = gson.toJson(jsonMap);
-//            String msg = null;
-//
-//            String txt = String.valueOf(MapsJson);
-//            System.out.println("texto:" + txt);
-//            //Al abrir una nueva conexion, el servidor responde!
-//            session.getBasicRemote().sendText(String.valueOf(txt));
-//        } catch (IOException ex) {
-//            Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (PersistenciaException ex) {
-//            Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     @OnError

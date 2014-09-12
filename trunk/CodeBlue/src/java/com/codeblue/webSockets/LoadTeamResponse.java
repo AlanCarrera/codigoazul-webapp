@@ -124,15 +124,15 @@ public class LoadTeamResponse {
     
     /**
      *
-     * @param list
+     * @param listaPersonal
      */
-    public void broadcastTeamReady(List<Employe> list){
+    public void broadcastTeamReady(List<Employe> listaPersonal){
         System.out.println("Entro jiji!");
-        sendAll(list);
+        sendAll(listaPersonal);
         
     }
 
-    private static void sendAll(List<Employe> employes) {
+    private static void sendAll(List<Employe> listaPersonal) {
         try {
             ArrayList<Session> closedSessions = new ArrayList<Session>();
             for (Session session : queue2) {
@@ -140,10 +140,10 @@ public class LoadTeamResponse {
                     closedSessions.add(session);
                 } else {
                     Gson gson = new Gson();
-                    List<Object> jsonMap = new ArrayList<>();
+                    List<Object> personalJSON = new ArrayList<>();
 //                    employes.add(new Employe(5));
-                    jsonMap.addAll(employes);
-                    session.getBasicRemote().sendText(gson.toJson(jsonMap));
+                    personalJSON.addAll(listaPersonal);
+                    session.getBasicRemote().sendText(gson.toJson(personalJSON));
                 }
             }
             queue2.removeAll(closedSessions);
