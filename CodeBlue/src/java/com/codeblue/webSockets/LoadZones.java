@@ -7,6 +7,9 @@ package com.codeblue.webSockets;
 
 import Control.Control;
 import Interfaces.IDAOs;
+import com.BlueCode.Excepciones.AdmorZonasException;
+import com.BlueCode.Fachada.FachadaAdmorZonas;
+import com.BlueCode.Interfaces.IAdmorZonas;
 import com.bluecode.businessObjects.Zone;
 import com.google.gson.Gson;
 import exceptions.PersistenciaException;
@@ -37,8 +40,9 @@ public class LoadZones {
         System.out.println("Se abrio una nueva conexion, session: " + session.getId() + ", config: " + conf.toString());
 //        queue.add(session);
         try {
-            IDAOs daos = new Control();
-            List<Zone> zones = daos.getZoneAll();
+//            IDAOs daos = new Control();
+            IAdmorZonas fachadaAdmorZonas = new FachadaAdmorZonas();
+            List<Zone> zones = fachadaAdmorZonas.getZonas();
             Gson gson = new Gson();
 //            for (int i = 0; i < maps.size(); i++) {
 //                for (int j = 0; j < maps.get(i).getCoordenadas().size(); j++) {
@@ -68,7 +72,7 @@ public class LoadZones {
             //Al abrir una nueva conexion, el servidor responde!
             session.getBasicRemote().sendText(String.valueOf(txt));
 //            session.getBasicRemote().sendText(msg);
-        } catch (IOException | PersistenciaException ex) {
+        } catch (IOException | AdmorZonasException ex) {
             Logger.getLogger(LoadZones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

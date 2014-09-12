@@ -7,8 +7,13 @@ package com.codeblue.webServices;
 
 import Control.Control;
 import Interfaces.IDAOs;
+import com.CodeBlue.Fachada.FachadaAdmorEquipoRespuesta;
+import com.CodeBlue.Fachada.FachadaAdmorPersonal;
+import com.CodeBlue.Interfaces.IAdmorEquipoRespuesta;
+import com.CodeBlue.Interfaces.IAdmorPersonal;
 import com.bluecode.businessObjects.Employe;
 import com.bluecode.businessObjects.Zone;
+import com.codeblue.webSockets.CodeBlueAlertSimulator;
 import com.codeblue.webSockets.LoadCodeBlueZone;
 import com.codeblue.webSockets.LoadTeamResponse;
 import exceptions.PersistenciaException;
@@ -51,37 +56,34 @@ public class CodeBlueAlert {
     @WebMethod(operationName = "alert")
     @Oneway
     public void alert(@WebParam(name = "idPaciente") int idPaciente, @WebParam(name = "x") double x, @WebParam(name = "y") double y) {
-        //TODO write your implementation code here:
-        System.out.println("Entrooo Alerta!");
         try {
-//            System.out.println("id: " + id + ",x: " + x + ",y: " + y);
             IDAOs idao = new Control();
             List<Zone> zones = idao.getZoneAll();
-//            for (Zone z: zones){
-//                System.out.println(z.toString());
-//            }
-            //checar en que zona se enceuntra
+            IAdmorEquipoRespuesta fachadaEquipoRespuesta = new FachadaAdmorEquipoRespuesta();
+            //buscar en que zona se enceuntra
             for (Zone z : zones) {
                 if (z.getXesi() <= x && x <= z.getXeid()) {//Verificar si se encuentra dentro de X
-                    if (z.getYesi() <= y && y <= z.getYeid()) {
-                        System.out.println("idPaciente: " + idPaciente + "; zone: " + z.getName());
-//                        idao.updateCharacterOnZone(idPaciente, z.getId());
-//                        alertSimulator(z.getId());
-                        sendJMSMessageToMyQueue(z.getId());
-                        System.out.println("ajuaa!");
-                        com.codeblue.webSockets.LoadCodeBlueZone ws = new LoadCodeBlueZone();
-                        ws.broadcastCodeBlueZone(z);
+                    if (z.getYesi() <= y && y <= z.getYeid()) {//Verificar si se encuentra dentro de Y
+                        System.out.println("Entro el sweb, " + z.getName());
+//                        sendJMSMessageToMyQueue(z.getId());
+                        //Formar euipo de respuesta.
+                        fachadaEquipoRespuesta.formarEquipoRespuesta(z);
+                        //enviar alerta a todos los usuarios.
+                        com.codeblue.webSockets.CodeBlueAlertSimulator ws = new CodeBlueAlertSimulator();
+                        ws.encenderAlertaCodigoAzul(z); //trasmite la alerta a todas las conexiones.
+                        //enviar a todos los usuarios el equipo de respuesta.
+                        com.codeblue.webSockets.LoadTeamResponse teamResponse = new LoadTeamResponse();
+                        teamResponse.broadcastTeamReady(fachadaEquipoRespuesta.getEquipoRespuesta());
                         break;
                     }
-//                    System.out.println("No");
                 }
             }
-//            System.out.println("finish");
         } catch (PersistenciaException ex) {
             Logger.getLogger(CharacterPointsWS.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JMSException ex) {
-            Logger.getLogger(CodeBlueAlert.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+//        catch (JMSException ex) {
+//            Logger.getLogger(CodeBlueAlert.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 

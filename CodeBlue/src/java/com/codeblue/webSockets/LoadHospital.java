@@ -3,11 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.codeblue.webSockets;
 
 import Control.Control;
 import Interfaces.IDAOs;
+import com.BlueCode.Excepciones.AdmorPlanosException;
+import com.BlueCode.Excepciones.AdmorZonasException;
+import com.BlueCode.Fachada.FachadaAdmorPlanos;
+import com.BlueCode.Fachada.FachadaAdmorZonas;
+import com.BlueCode.Interfaces.IAdmorPlanos;
+import com.BlueCode.Interfaces.IAdmorZonas;
+import com.CodeBlue.Excepciones.AdmorPersonalException;
+import com.CodeBlue.Fachada.FachadaAdmorPersonal;
+import com.CodeBlue.Interfaces.IAdmorPersonal;
 import com.bluecode.businessObjects.Employe;
 import com.bluecode.businessObjects.Map;
 import com.bluecode.businessObjects.Zone;
@@ -35,7 +43,13 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/endPoint/loadHospital")
 public class LoadHospital {
-   //queue publisher thread of connected clients
+
+    //Conexion Administradores
+    private final IAdmorPlanos fachadaAdmorPlanos = new FachadaAdmorPlanos();
+    private static IAdmorPersonal fachadaAdmorPersonal = new FachadaAdmorPersonal();
+    private static IAdmorZonas fachadaAdmorZonad = new FachadaAdmorZonas();
+
+    //queue publisher thread of connected clients
     private static Queue<Session> queue = new ConcurrentLinkedQueue<Session>();
     private static Thread thread;
 
@@ -46,22 +60,25 @@ public class LoadHospital {
 
                     if (queue != null) {
                         try {
-                            IDAOs daos = new Control();
-                            List<Employe> employeList = daos.getEmployeAll();
+//                            IDAOs daos = new Control();
+
+//                            List<Employe> employeList = daos.getEmployeAll(); //CAMBIADO  
+                            List<Employe> employeList = fachadaAdmorPersonal.getPersonalLista();
                             for (int i = 0; i < employeList.size(); i++) {
-                                Zone zone = daos.getZoneByEmploye(employeList.get(i).getId());
+//                                Zone zone = daos.getZoneByEmploye(employeList.get(i).getId()); //CAMBIO
+                                Zone zone = fachadaAdmorZonad.getZonaPersonal(employeList.get(i).getId());
                                 if (zone != null) {
                                     employeList.get(i).setZone(zone);
                                 }
                             }
                             sendAll(employeList);
-                        } catch (PersistenciaException ex) {
+                        } catch (AdmorPersonalException | AdmorZonasException ex) {
                             Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
 
                     try {
-                        sleep(2000);
+                        sleep(4000);
                     } catch (InterruptedException ie) {
 
                     }
@@ -82,23 +99,26 @@ public class LoadHospital {
         System.out.println("Se abrio una nueva conexion, session: " + session.getId() + ", config: " + conf.toString());
         queue.add(session);
         try {
-            IDAOs daos = new Control();
-            List<Map> maps = daos.getMapAll();
+//            IDAOs daos = new Control();
+
+            // List<Map> setPlanosDomensionCoordendas(double dimension,);
+//            List<Map> maps = daos.getMapAll();
             Gson gson = new Gson();
-            for (int i = 0; i < maps.size(); i++) {
-                for (int j = 0; j < maps.get(i).getCoordenadas().size(); j++) {
-                    maps.get(i).getCoordenadas().get(j).setX((maps.get(i).getCoordenadas().get(j).getX() * 6));
-                    System.out.println(maps.get(i).getCoordenadas().get(j).getX() * 6);
-                    maps.get(i).getCoordenadas().get(j).setY((maps.get(i).getCoordenadas().get(j).getY() * 6));
-                    System.out.println(maps.get(i).getCoordenadas().get(j).getY() * 6);
-                }
-            }
-            List<Object> jsonMap = new ArrayList<Object>();
+//            for (int i = 0; i < maps.size(); i++) {
+//                for (int j = 0; j < maps.get(i).getCoordenadas().size(); j++) {
+//                    maps.get(i).getCoordenadas().get(j).setX((maps.get(i).getCoordenadas().get(j).getX() * 6));
+//                    System.out.println(maps.get(i).getCoordenadas().get(j).getX() * 6);
+//                    maps.get(i).getCoordenadas().get(j).setY((maps.get(i).getCoordenadas().get(j).getY() * 6));
+//                    System.out.println(maps.get(i).getCoordenadas().get(j).getY() * 6);
+//                }
+//            }
+//            List<Object> jsonMap = new ArrayList<Object>(); //CAMBIO
+            List<Map> jsonMap = fachadaAdmorPlanos.setPlanosDomensionCoordendas(6); //se aumentara seis veces la dimension para tener un buen nuero de pixeles.
 //            jsonMap.add(new Object(){ String nombre = "map";});
-            jsonMap.addAll(maps);
+//            jsonMap.addAll(maps);
             String MapsJson = gson.toJson(jsonMap);
 //            Zone zone1 = new Zone(1, "Medicina interna A", 7.4545, 0, 14.9282, 12.9417);
-            String msg = null;
+//            String msg = null;
 //            msg += "<g transform=\"scale(6)\">";
 //            msg += "<rect class='zone' x='26.727 y='0' stroke='#333333' stroke-width='1.4173' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10' width='44.8662' height='77.6502'/>";
 //            msg += "</g>";
@@ -115,7 +135,10 @@ public class LoadHospital {
 //            session.getBasicRemote().sendText(msg);
         } catch (IOException ex) {
             Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PersistenciaException ex) {
+        } //        catch (PersistenciaException ex) {
+        //            Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
+        //        }
+        catch (AdmorPlanosException ex) {
             Logger.getLogger(LoadHospital.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -132,17 +155,17 @@ public class LoadHospital {
         System.out.println("Session closed: " + session.getId());
     }
 
-    private static void sendAll(List<Employe> employes) {
+    private static void sendAll(List<Employe> personal) {
         try {
-            ArrayList<Session> closedSessions = new ArrayList<Session>();
+            ArrayList<Session> closedSessions = new ArrayList<>();
             for (Session session : queue) {
                 if (!session.isOpen()) {
                     closedSessions.add(session);
                 } else {
                     Gson gson = new Gson();
-                    List<Object> jsonMap = new ArrayList<Object>();
-                    jsonMap.addAll(employes);
-                    session.getBasicRemote().sendText(gson.toJson(jsonMap));
+                    List<Object> personalJSON = new ArrayList<>();
+                    personalJSON.addAll(personal);
+                    session.getBasicRemote().sendText(gson.toJson(personalJSON));
                 }
             }
             queue.removeAll(closedSessions);
@@ -151,5 +174,5 @@ public class LoadHospital {
             t.printStackTrace();
         }
     }
-    
+
 }
