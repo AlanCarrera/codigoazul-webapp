@@ -4,18 +4,24 @@
  */
 package Control;
 
-import persistence.Citys;
-import persistence.Movies;
-import persistence.Conexion;
-import persistence.Subscribers;
-import persistence.Locations;
-import exceptions.PersistenciaException;
 import Interfaces.IDAOs;
+import com.bluecode.businessObjects.Area;
 import com.bluecode.businessObjects.Employe;
+import com.bluecode.businessObjects.Equipo;
+import com.bluecode.businessObjects.Grafo;
 import com.bluecode.businessObjects.Map;
+import com.bluecode.businessObjects.Position;
+import com.bluecode.businessObjects.RolPersonal;
+import com.bluecode.businessObjects.Role;
 import com.bluecode.businessObjects.Zone;
+import exceptions.PersistenciaException;
 import java.util.List;
 import persistence.*;
+import persistence.Citys;
+import persistence.Conexion;
+import persistence.Locations;
+import persistence.Movies;
+import persistence.Subscribers;
 
 /**
  *
@@ -101,7 +107,6 @@ public class Control implements IDAOs {
         Zones zones = new Zones();
         zones.setConnection(conexion.getConexion());
         Zone zone = zones.getZoneById(idZone);
-        prepararConexion();
         return zone;
     }
 
@@ -114,53 +119,112 @@ public class Control implements IDAOs {
         return employeList;
     }
 
-//    @Override
-//    public List<City> searchCitys() throws PersistenciaException {
-//        prepararConexion();
-//        Citys citys = new Citys();
-//        citys.setConnection(conexion.getConexion());
-//        return citys.searchCitys();
-//    }
-//
-//    @Override
-//    public List<Subscriber> searchSubscribersByCity(int city) throws PersistenciaException {
-//        prepararConexion();
-//        Subscribers subs = new Subscribers();
-//        subs.setConnection(conexion.getConexion());
-//        return subs.searchSubscribersByCity(city);
-//    }
-//
-//    @Override
-//    public List<Location> searchLocationsBySub(int city, int subscriber) throws PersistenciaException {
-//        prepararConexion();
-//        Locations locations = new Locations();
-//        locations.setConnection(conexion.getConexion());
-//        List<Location> locationsCity = locations.searchLocationsByCity(subscriber, city);
-//        return locationsCity;
-//    }
-//
-//    @Override
-//    public BillBoard searchBillBoardByLocation(int location) throws PersistenciaException {
-//        prepararConexion();
-//        BillBoards bbs = new BillBoards();
-//        bbs.setConnection(conexion.getConexion());
-//        BillBoard bb = bbs.searchBillboardByLocation(location);
-//        System.out.println(bb.toString());
-//        //Recupera Schedules
-//        prepararConexion();
-//        Schedules schedules = new Schedules();
-//        schedules.setConnection(conexion.getConexion());
-//        List<Schedule> schedulesList = schedules.searchSchedulesByBillboard(bb.getId());
-////        bb.setSchedules(schedulesList);
-//        //Recupera Movie por schedule
-//        for (Schedule s : schedulesList) {
-//            prepararConexion();
-//            Movies movies = new Movies();
-//            movies.setConnection(conexion.getConexion());
-//            Movie movie = movies.searchMovie(s.getMovie().getId());
-//            s.setMovie(movie);
-//        }
-//        bb.setSchedules(schedulesList);
-//        return bb;
-//    }
+    @Override
+    public Area getAreaNombre(String nombreArea) throws PersistenciaException {
+        prepararConexion();
+        Areas areas = new Areas();
+        areas.setConnection(conexion.getConexion());
+        Area area = areas.getAreaNombre(nombreArea);
+        return area;
+    }
+
+    @Override
+    public List<Zone> getZonaArea(int idArea) throws PersistenciaException {
+        prepararConexion();
+        Zones zones = new Zones();
+        zones.setConnection(conexion.getConexion());
+        List<Zone> zone = zones.getZoneArea(idArea);
+        return zone;
+    }
+
+    @Override
+    public Employe getPersonal(int idPersonal) throws PersistenciaException {
+        prepararConexion();
+        Employes employes = new Employes();
+        employes.setConnection(conexion.getConexion());
+        Employe personal = employes.getPersonal(idPersonal);
+        return personal;
+    }
+
+    @Override
+    public Role getRol(int idRol) throws PersistenciaException {
+        prepararConexion();
+        Employes employes = new Employes();
+        employes.setConnection(conexion.getConexion());
+        int idRolResult = employes.getRolPersonal(idRol);
+        prepararConexion();
+        employes.setConnection(conexion.getConexion());
+        Role rol = employes.getRol(idRolResult);
+        return rol;
+    }
+
+    @Override
+    public Position getPuesto(int idPuesto) throws PersistenciaException {
+        prepararConexion();
+        Employes employes = new Employes();
+        employes.setConnection(conexion.getConexion());
+        Position puesto = employes.getPuesto(idPuesto);
+        return puesto;
+    }
+
+    @Override
+    public List<RolPersonal> getRolesPersonal() throws PersistenciaException {
+        prepararConexion();
+        Roles roles = new Roles();
+        roles.setConnection(conexion.getConexion());
+        List<RolPersonal> rolesPersonal = roles.getListaRolesPersonal();
+        return rolesPersonal;
+    }
+
+    @Override
+    public List<Equipo> getListaEquipoRol(int idRol) throws PersistenciaException {
+        prepararConexion();
+        Teams teams = new Teams();
+        teams.setConnection(conexion.getConexion());
+        List<Equipo> equipoBase = teams.getListaEquipoRol(idRol);
+        return equipoBase;
+    }
+
+    @Override
+    public double getFactorGrafo(int idZonaOrig, int idZonaDest) throws PersistenciaException {
+        prepararConexion();
+        Grafos grafos = new Grafos();
+        grafos.setConnection(conexion.getConexion());
+        return grafos.getFactorGrafo(idZonaOrig, idZonaDest);
+    }
+
+    @Override
+    public void eliminarEquipoBase() throws PersistenciaException {
+        prepararConexion();
+        Teams teams = new Teams();
+        teams.setConnection(conexion.getConexion());
+        teams.eliminarEquipoBase();
+    }
+
+    @Override
+    public boolean agregarEquipoRespuesta(List<Equipo> equipoBase) throws PersistenciaException {
+        prepararConexion();
+        Teams teams = new Teams();
+        teams.setConnection(conexion.getConexion());
+        teams.agregarEquipoRespuesta(equipoBase);
+        return true;
+    }
+
+    @Override
+    public List<RolPersonal> getRolesEquipoCB() throws PersistenciaException {
+        prepararConexion();
+        Roles roles = new Roles();
+        roles.setConnection(conexion.getConexion());
+        List<RolPersonal> rolesPersonal = roles.getRolesEquipoCB();
+        return rolesPersonal;
+    }
+
+    @Override
+    public List<Grafo> getListaGrafos() throws PersistenciaException {
+        prepararConexion();
+        Grafos grafos = new Grafos();
+        grafos.setConnection(conexion.getConexion());
+        List<Grafo> listaGrafos = grafos.getListaGrafos();
+        return listaGrafos;
+    }
 }

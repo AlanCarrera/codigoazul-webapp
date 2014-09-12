@@ -107,4 +107,39 @@ public class Zones extends Table {
         return zone;
     }
 
+    /**
+     * Este metodo devuelve las Zona por el identificador del Area al que
+     * pertenesca.
+     *
+     * @param idArea identificar del Area.
+     * @return devuelve las Zona encontrada, null en caso contrario.
+     * @throws PersistenciaException
+     */
+    public List<Zone> getZoneArea(int idArea) throws PersistenciaException {
+        List<Zone> listResult = new ArrayList<>();
+        ResultSet renglon;
+        String sql = "call sp_getZonasArea (" + idArea + ");";
+        try {
+            consulta(sql);
+            while ((renglon = obtenRenglon()) != null) {
+//                (int id, int area, String name, double xesi, double yesi, double xeid, double yeid)
+                Zone zone = new Zone(
+                        renglon.getInt(1),
+                        renglon.getInt(2),
+                        renglon.getString(3),
+                        renglon.getDouble(4),
+                        renglon.getDouble(5),
+                        renglon.getDouble(6),
+                        renglon.getDouble(7)
+                );
+                listResult.add(zone);
+            }
+            close();
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
+        return listResult;
+    }
+
 }
