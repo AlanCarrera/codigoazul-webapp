@@ -5,8 +5,10 @@
  */
 package persistence;
 
+import com.bluecode.businessObjects.Equipo;
 import com.bluecode.businessObjects.Map;
 import com.bluecode.businessObjects.MapCoords;
+import com.bluecode.businessObjects.RolPersonal;
 import com.bluecode.businessObjects.Zone;
 import exceptions.PersistenciaException;
 import java.sql.ResultSet;
@@ -54,6 +56,62 @@ public class Teams extends Table {
             throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
         }
         return id;
+    }
+
+    public List<Equipo> getListaEquipoRol(int idRol) throws PersistenciaException {
+        List<Equipo> listResult = new ArrayList<>();
+        ResultSet renglon;
+        String sql = "call sp_getListaEquipoRol (" + idRol + ");";
+        try {
+            consulta(sql);
+            //int id, String nombre, int dispositivo, Zone zone, Position position, Role role
+            while ((renglon = obtenRenglon()) != null) {
+                Equipo equipo = new Equipo(
+                        renglon.getInt(1),
+                        renglon.getInt(2),
+                        renglon.getInt(3),
+                        renglon.getInt(4),
+                        renglon.getInt(5)
+                );
+                listResult.add(equipo);
+
+            }
+            close();
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
+        return listResult;
+    }
+
+    public void eliminarEquipoBase() throws PersistenciaException {
+        String sql = "call sp_eliminarEquipoBase ();";
+        try {
+            consulta(sql);
+            close();
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
+    }
+
+    public boolean agregarEquipoRespuesta(List<Equipo> equipoBase) throws PersistenciaException {
+        int index = -1;
+        try {
+            for (Equipo personal : equipoBase) {
+                String sql = "call sp_agregarEquipoRespuesta ("
+                        + (index++) + ","
+                        + personal.getIdPersonal() + ","
+                        + personal.getIdRol() +","
+                        + personal.getIdZona() +");";
+                consulta(sql);
+            }
+            close();
+            return true;
+        } catch (SQLException e) {
+            close();
+            throw new PersistenciaException("Error de conexion de base de datos", e.getCause());
+        }
     }
 
 }
